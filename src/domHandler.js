@@ -38,26 +38,37 @@ const domHandler = (() => {
   const spanSunSet = document.querySelector("span[class='sun'][id='set']");
 
   function getWeatherIcon(code) {
+    let fullURL = "";
     switch (true) {
-      case code / 100 === 2:
-        return `${ICON_URL}${ICON_THUNDER}`;
-      case code / 100 === 3 || (code >= 520 && code <= 531):
-        return `${ICON_URL}${ICON_DRIZZLE}`;
-      case code / 100 === 6 || code === 511:
-        return `${ICON_URL}${ICON_SNOW}`;
-      case code / 100 === 5:
-        return `${ICON_URL}${ICON_RAIN}`;
-      case code / 100 === 7:
-        return `${ICON_URL}${ICON_MIST}`;
+      case Math.floor(code / 100) === 2:
+        fullURL = `${ICON_URL}${ICON_THUNDER}`;
+        break;
+      case Math.floor(code / 100) === 3 || (code >= 520 && code <= 531):
+        fullURL = `${ICON_URL}${ICON_DRIZZLE}`;
+        break;
+      case Math.floor(code / 100) === 6 || code === 511:
+        fullURL = `${ICON_URL}${ICON_SNOW}`;
+        break;
+      case Math.floor(code / 100) === 5:
+        fullURL = `${ICON_URL}${ICON_RAIN}`;
+        break;
+      case Math.floor(code / 100) === 7:
+        fullURL = `${ICON_URL}${ICON_MIST}`;
+        break;
       case code === 800:
-        return `${ICON_URL}${ICON_CLEAR}`;
+        fullURL = `${ICON_URL}${ICON_CLEAR}`;
+        break;
       case code === 801:
-        return `${ICON_URL}${ICON_CLOUDS0}`;
+        fullURL = `${ICON_URL}${ICON_CLOUDS0}`;
+        break;
       case code === 802:
-        return `${ICON_URL}${ICON_CLOUDS1}`;
+        fullURL = `${ICON_URL}${ICON_CLOUDS1}`;
+        break;
       case code === 803 || code === 804:
-        return `${ICON_URL}${ICON_CLOUDS2}`;
+        fullURL = `${ICON_URL}${ICON_CLOUDS2}`;
+        break;
     }
+    return fullURL;
   }
 
   function editLocation(appData) {
@@ -86,6 +97,7 @@ const domHandler = (() => {
     for (let i = 0; i < appData.list.length; i++) {
       timestampsCarrousel.appendChild(newTimestamp(appData.list[i], i));
     }
+    top.ActiveSlideIndex = '0';
     top.nbOfTimestamps = appData.list.length;
     timestampsCarrousel.firstChild.classList.add("timestampActive");
     carrouselContainer.insertBefore(timestampsCarrousel, btnNext);
